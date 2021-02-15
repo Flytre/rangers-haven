@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.flytre.rangers_haven.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "BowItemMixin", "CrossbowItemMixin", "EnchantmentMixin", "PersistentProjectileEntityMixin", "ProjectileMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
