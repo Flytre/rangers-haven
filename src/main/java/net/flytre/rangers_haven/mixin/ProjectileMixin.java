@@ -1,6 +1,8 @@
 package net.flytre.rangers_haven.mixin;
 
+import net.flytre.rangers_haven.Config;
 import net.flytre.rangers_haven.RangerProjectile;
+import net.flytre.rangers_haven.RangersHaven;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -44,7 +46,9 @@ public abstract class ProjectileMixin extends Entity {
 
         if (me.getExplosionLevel() <= 0)
             return;
-        this.world.createExplosion(getOwner(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1 + me.getExplosionLevel(), Explosion.DestructionType.BREAK);
+
+        Config config = RangersHaven.CONFIG.getConfig();
+        this.world.createExplosion(getOwner(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1 + me.getExplosionLevel(), config.explosiveEnchantDamagesBlocks() ? Explosion.DestructionType.BREAK : Explosion.DestructionType.NONE);
         me.setExplosionLevel(-1);
     }
 }
