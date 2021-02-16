@@ -4,15 +4,16 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 
-public class ExplosiveEnchantment extends Enchantment {
-    public ExplosiveEnchantment() {
-        super(Rarity.RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
-        this.translationKey = "enchantments.rangers_haven.explosive";
+public class RopedEnchant extends Enchantment {
+
+    public RopedEnchant() {
+        super(Enchantment.Rarity.RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        this.translationKey = "enchantments.rangers_haven.roped";
     }
 
     @Override
     public int getMinPower(int level) {
-        return (level + 1) * 9;
+        return (level + 1) * 8;
     }
 
     @Override
@@ -27,6 +28,6 @@ public class ExplosiveEnchantment extends Enchantment {
 
     @Override
     public int getMaxLevel() {
-        return 3;
+        return 4;
     }
 }

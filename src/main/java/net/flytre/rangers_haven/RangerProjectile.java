@@ -7,4 +7,16 @@ public interface RangerProjectile {
 
     int getExplosionLevel();
 
+    void setRopedLevel(int roped);
+
+
+    int getRopedLevel();
+
+
+    void setSeekingLevel(int seeking);
+
+
+    int getSeekingLevel();
+
+
 }

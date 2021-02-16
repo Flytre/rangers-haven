@@ -1,3 +1,6 @@
 {
-  "enchantments.rangers_haven.explosive" : "Explosive"
+  "enchantments.rangers_haven.explosive": "Explosive",
+  "enchantments.rangers_haven.roped": "Roped",
+  "enchantments.rangers_haven.nimble" : "Nimble",
+  "enchantments.rangers_haven.seeking" : "Seeking"
 }
