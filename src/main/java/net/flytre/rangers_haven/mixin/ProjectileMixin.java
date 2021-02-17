@@ -47,9 +47,6 @@ public abstract class ProjectileMixin extends Entity {
     public abstract Entity getOwner();
 
     @Shadow
-    public abstract void setVelocity(double x, double y, double z, float speed, float divergence);
-
-    @Shadow
     public abstract void tick();
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -98,8 +95,6 @@ public abstract class ProjectileMixin extends Entity {
     public void rangershaven$entityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         spawnExplosion(entityHitResult.getEntity().getBlockPos());
         ropedPull(entityHitResult.getEntity().getBlockPos());
-
-        Entity entity = entityHitResult.getEntity();
     }
 
     @Inject(method = "onBlockHit", at = @At("HEAD"))
