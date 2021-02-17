@@ -2,21 +2,25 @@ package net.flytre.rangers_haven;
 
 public interface RangerProjectile {
 
-    void setExplosionLevel(int level);
-
-
     int getExplosionLevel();
 
-    void setRopedLevel(int roped);
-
+    void setExplosionLevel(int level);
 
     int getRopedLevel();
 
+    void setRopedLevel(int roped);
+
+    int getSeekingLevel();
 
     void setSeekingLevel(int seeking);
 
+    int getFlechettes();
 
-    int getSeekingLevel();
+    void setFlechettes(int flechettes);
+
+    int getSharpshooter();
+
+    void setSharpshooter(int sharpshooter);
 
 
 }

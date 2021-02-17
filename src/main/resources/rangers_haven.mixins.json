@@ -4,8 +4,8 @@
   "package": "net.flytre.rangers_haven.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "BowItemMixin", "CrossbowItemMixin", "EnchantmentMixin", "PersistentProjectileEntityMixin",
-    "ProjectileMixin"
+    "BowItemMixin", "CrossbowItemMixin", "EnchantmentMixin", "MultishotEnchantmentMixin",
+    "PersistentProjectileEntityMixin", "ProjectileMixin"
   ],
   "client": [
     "NimblePredicateMixin"

@@ -2,5 +2,13 @@
   "enchantments.rangers_haven.explosive": "Explosive",
   "enchantments.rangers_haven.roped": "Roped",
   "enchantments.rangers_haven.nimble" : "Nimble",
-  "enchantments.rangers_haven.seeking" : "Seeking"
+  "enchantments.rangers_haven.seeking" : "Seeking",
+  "enchantments.rangers_haven.explosive.desc": "Imbues your bow with the power of tnt, allowing arrows fired by it to explode on impact!",
+  "enchantments.rangers_haven.roped.desc": "An invisible, magical string flies behind your arrow and pulls you towards the arrow's location.",
+  "enchantments.rangers_haven.nimble.desc" : "Enhances the users agility, giving them an easier time drawing back the bow.",
+  "enchantments.rangers_haven.seeking.desc" : "Gives arrows new technology, allowing them to intelligently detect and destroy targets on their flight path.",
+  "enchantments.rangers_haven.sharpshooter" : "Sharpshooter",
+  "enchantments.rangers_haven.sharpshooter.desc": "Unique sensors track arrow flight distance and reward the marksman accordingly.",
+  "enchantments.rangers_haven.flechettes" : "Flechettes",
+  "enchantments.rangers_haven.flechettes.desc": "Tailored arrow heads burst at the apex of the flight."
 }

@@ -10,6 +10,8 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -24,12 +26,17 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ProjectileEntity.class)
 public abstract class ProjectileMixin extends Entity {
+
+    @Unique
+    private double lY;
+
 
     public ProjectileMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -38,7 +45,6 @@ public abstract class ProjectileMixin extends Entity {
     @Shadow
     @Nullable
     public abstract Entity getOwner();
-
 
     @Shadow
     public abstract void setVelocity(double x, double y, double z, float speed, float divergence);
@@ -65,18 +71,35 @@ public abstract class ProjectileMixin extends Entity {
         }
 
         if (me.getSeekingLevel() > 0) {
-            Entity target = getTarget();
+            Entity target = getTarget(((RangerProjectile) this).getSeekingLevel() / 2.0);
             if (target != null) {
                 applyHoming(target, me.getSeekingLevel());
                 me.setSeekingLevel(0);
             }
         }
+        if (me.getFlechettes() > 0 && lY > getY()) {
+            Entity owner = getOwner();
+
+            for (int i = 0; i < me.getFlechettes() * 3; i++) {
+                ArrowEntity copy = owner instanceof LivingEntity ? new ArrowEntity(world, (LivingEntity) owner) : new ArrowEntity(world, getX(), getY(), getZ());
+                copy.copyPositionAndRotation(this);
+                Vec3d normal = getVelocity().normalize();
+                copy.setVelocity(normal.x, normal.y, normal.z, (float) getVelocity().length(), 10);
+                copy.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+                world.spawnEntity(copy);
+            }
+            me.setFlechettes(0);
+
+        }
+        lY = getY();
     }
 
     @Inject(method = "onEntityHit", at = @At("HEAD"))
     public void rangershaven$entityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         spawnExplosion(entityHitResult.getEntity().getBlockPos());
         ropedPull(entityHitResult.getEntity().getBlockPos());
+
+        Entity entity = entityHitResult.getEntity();
     }
 
     @Inject(method = "onBlockHit", at = @At("HEAD"))
@@ -117,7 +140,7 @@ public abstract class ProjectileMixin extends Entity {
         me.setExplosionLevel(-1);
     }
 
-    private Entity getTarget() {
+    private Entity getTarget(double rad) {
         TargetPredicate predicate = new TargetPredicate();
         Entity owner = getOwner();
         if (owner == null)
@@ -126,7 +149,7 @@ public abstract class ProjectileMixin extends Entity {
             predicate.setPredicate(i -> !(i == getOwner()) && !(i instanceof PassiveEntity) && !(i instanceof GolemEntity));
         else
             predicate.setPredicate(i -> !(i == getOwner()) && !(i instanceof HostileEntity));
-        return world.getClosestEntity(LivingEntity.class, predicate, null, this.getX(), this.getY(), this.getZ(), this.getBoundingBox().expand(((RangerProjectile) this).getSeekingLevel() / 2.0));
+        return world.getClosestEntity(LivingEntity.class, predicate, null, this.getX(), this.getY(), this.getZ(), this.getBoundingBox().expand(rad));
     }
 
     private void setVelocityForTarget(@NotNull Entity target) {

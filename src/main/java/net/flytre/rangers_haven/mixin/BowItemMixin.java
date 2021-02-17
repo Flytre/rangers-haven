@@ -3,6 +3,7 @@ package net.flytre.rangers_haven.mixin;
 import net.flytre.rangers_haven.RangerProjectile;
 import net.flytre.rangers_haven.RangersHaven;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -33,6 +34,15 @@ public class BowItemMixin {
         l = EnchantmentHelper.getLevel(RangersHaven.SEEKING, stack);
         if (l > 0)
             ((RangerProjectile) persistentProjectileEntity).setSeekingLevel(l);
+        l = EnchantmentHelper.getLevel(Enchantments.PIERCING, stack);
+        if (l > 0)
+            persistentProjectileEntity.setPierceLevel((byte) l);
+        l = EnchantmentHelper.getLevel(RangersHaven.FLECHETTES, stack);
+        if (l > 0)
+            ((RangerProjectile) persistentProjectileEntity).setFlechettes(l);
+        l = EnchantmentHelper.getLevel(RangersHaven.SHARPSHOOTER, stack);
+        if (l > 0)
+            ((RangerProjectile) persistentProjectileEntity).setSharpshooter(l);
     }
 
     @ModifyVariable(method = "onStoppedUsing", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/BowItem;getPullProgress(I)F"))

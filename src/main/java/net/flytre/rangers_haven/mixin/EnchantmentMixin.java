@@ -1,23 +1,24 @@
 package net.flytre.rangers_haven.mixin;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentTarget;
-import net.minecraft.enchantment.MultishotEnchantment;
-import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.enchantment.PiercingEnchantment;
+import net.minecraft.item.BowItem;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(MultishotEnchantment.class)
-public abstract class EnchantmentMixin extends Enchantment {
+@Mixin(Enchantment.class)
+public class EnchantmentMixin {
 
-    protected EnchantmentMixin(Rarity weight, EnchantmentTarget type, EquipmentSlot[] slotTypes) {
-        super(weight, type, slotTypes);
-    }
-
-    @Inject(method="getMaxLevel",at=@At("HEAD"), cancellable = true)
-    public void multishotTen(CallbackInfoReturnable<Integer> cir) {
-        cir.setReturnValue(5);
+    @SuppressWarnings("ConstantConditions")
+    @Inject(method = "isAcceptableItem", at = @At("HEAD"), cancellable = true)
+    public void rangers_haven$isAcceptable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+        if ((Object) this instanceof PiercingEnchantment) {
+            if (stack.getItem() instanceof BowItem) {
+                cir.setReturnValue(true);
+            }
+        }
     }
 }
