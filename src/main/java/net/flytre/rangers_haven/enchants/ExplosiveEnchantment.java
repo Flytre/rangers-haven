@@ -1,5 +1,6 @@
 package net.flytre.rangers_haven.enchants;
 
+import net.flytre.rangers_haven.RangersHaven;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
@@ -29,4 +30,10 @@ public class ExplosiveEnchantment extends Enchantment {
     public int getMaxLevel() {
         return 3;
     }
+
+    @Override
+    protected boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && other != RangersHaven.FLECHETTES && other != RangersHaven.ROPED;
+    }
+
 }

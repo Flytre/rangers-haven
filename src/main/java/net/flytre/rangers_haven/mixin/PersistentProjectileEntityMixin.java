@@ -24,7 +24,7 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
 
 
     @Inject(method = "tick", at = @At("HEAD"))
-    public void rangershaven$setStartPos(CallbackInfo ci) {
+    public void rangers_haven$setStartPos(CallbackInfo ci) {
         if (startPos.x == 0 && startPos.y == 0 && startPos.z == 0) {
             ProjectileEntity instance = (ProjectileEntity) (Object) this;
             startPos = instance.getPos();
@@ -82,7 +82,7 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
     }
 
     @Inject(method = "writeCustomDataToTag", at = @At("HEAD"))
-    public void rangershaven$toTag(CompoundTag tag, CallbackInfo ci) {
+    public void rangers_haven$toTag(CompoundTag tag, CallbackInfo ci) {
         tag.putInt("explosionLevel", explosionLevel);
         tag.putInt("roped", roped);
         tag.putInt("seeking", seeking);
@@ -95,7 +95,7 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
     }
 
     @Inject(method = "readCustomDataFromTag", at = @At("HEAD"))
-    public void rangershaven$fromTag(CompoundTag tag, CallbackInfo ci) {
+    public void rangers_haven$fromTag(CompoundTag tag, CallbackInfo ci) {
         this.explosionLevel = tag.getInt("explosionLevel");
         this.roped = tag.getInt("roped");
         this.seeking = tag.getInt("seeking");
@@ -106,7 +106,7 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
     }
 
     @ModifyVariable(method = "onEntityHit", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/util/math/MathHelper;ceil(D)I"))
-    public int rangershaven$modifySharpshooterDamage(int in) {
+    public int rangers_haven$modifySharpshooterDamage(int in) {
         ProjectileEntity instance = (ProjectileEntity) (Object) this;
         if (getSharpshooter() > 0) {
             Vec3d horiz = new Vec3d(startPos.x,instance.getPos().y,startPos.z);

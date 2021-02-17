@@ -66,7 +66,7 @@ public abstract class CrossbowItemMixin {
 
 
     @Inject(method = "shootAll", at = @At("HEAD"), cancellable = true)
-    private static void rangershaven$shootOverride(World world, LivingEntity entity, Hand hand, ItemStack stack, float speed, float divergence, CallbackInfo ci) {
+    private static void rangers_haven$shootOverride(World world, LivingEntity entity, Hand hand, ItemStack stack, float speed, float divergence, CallbackInfo ci) {
         List<ItemStack> list = getProjectiles(stack);
         float[] fs = getSoundPitches(entity.getRandom());
 

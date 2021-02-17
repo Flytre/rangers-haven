@@ -2,6 +2,7 @@ package net.flytre.rangers_haven.enchants;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.EquipmentSlot;
 
 public class SharpshooterEnchant extends Enchantment {
@@ -28,5 +29,10 @@ public class SharpshooterEnchant extends Enchantment {
     @Override
     public int getMaxLevel() {
         return 3;
+    }
+
+    @Override
+    protected boolean canAccept(Enchantment other) {
+        return super.canAccept(other) && other != Enchantments.PIERCING;
     }
 }

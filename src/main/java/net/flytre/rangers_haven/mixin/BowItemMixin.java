@@ -24,7 +24,7 @@ public class BowItemMixin {
 
 
     @Inject(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;setProperties(Lnet/minecraft/entity/Entity;FFFFF)V"), locals = LocalCapture.CAPTURE_FAILHARD)
-    public void rangershaven$applyExplosiveLevel(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci, PlayerEntity playerEntity, boolean bl, ItemStack itemStack, int i, float f, boolean bl2, ArrowItem arrowItem, PersistentProjectileEntity persistentProjectileEntity) {
+    public void rangers_haven$applyExplosiveLevel(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci, PlayerEntity playerEntity, boolean bl, ItemStack itemStack, int i, float f, boolean bl2, ArrowItem arrowItem, PersistentProjectileEntity persistentProjectileEntity) {
         int l = EnchantmentHelper.getLevel(RangersHaven.EXPLOSIVE, stack);
         if (l > 0)
             ((RangerProjectile) persistentProjectileEntity).setExplosionLevel(l);
@@ -46,7 +46,7 @@ public class BowItemMixin {
     }
 
     @ModifyVariable(method = "onStoppedUsing", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/BowItem;getPullProgress(I)F"))
-    public float rangershaven$modifyPullProgress(float f, ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
+    public float rangers_haven$modifyPullProgress(float f, ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         int l = EnchantmentHelper.getLevel(RangersHaven.NIMBLE, stack);
         float mult = MathHelper.clamp(1.0f - 0.05f * l, 0.05f, 1);
         return MathHelper.clamp(f / mult, 0, 1);

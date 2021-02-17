@@ -22,7 +22,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -50,7 +49,7 @@ public abstract class ProjectileMixin extends Entity {
     public abstract void tick();
 
     @Inject(method = "tick", at = @At("HEAD"))
-    public void rangershaven$particleTrails(CallbackInfo ci) {
+    public void rangers_haven$particleTrails(CallbackInfo ci) {
         if (!(this instanceof RangerProjectile))
             return;
 
@@ -92,13 +91,13 @@ public abstract class ProjectileMixin extends Entity {
     }
 
     @Inject(method = "onEntityHit", at = @At("HEAD"))
-    public void rangershaven$entityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
+    public void rangers_haven$entityHit(EntityHitResult entityHitResult, CallbackInfo ci) {
         spawnExplosion(entityHitResult.getEntity().getBlockPos());
         ropedPull(entityHitResult.getEntity().getBlockPos());
     }
 
     @Inject(method = "onBlockHit", at = @At("HEAD"))
-    public void rangershaven$blockHit(BlockHitResult blockHitResult, CallbackInfo ci) {
+    public void rangers_haven$blockHit(BlockHitResult blockHitResult, CallbackInfo ci) {
         spawnExplosion(blockHitResult.getBlockPos());
         ropedPull(blockHitResult.getBlockPos());
 
@@ -131,7 +130,7 @@ public abstract class ProjectileMixin extends Entity {
             return;
 
         Config config = RangersHaven.CONFIG.getConfig();
-        this.world.createExplosion(getOwner(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1 + me.getExplosionLevel(), config.explosiveEnchantDamagesBlocks() ? Explosion.DestructionType.BREAK : Explosion.DestructionType.NONE);
+        this.world.createExplosion(getOwner(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1.5f + me.getExplosionLevel() * 0.5f, config.explosiveEnchantDamagesBlocks() ? Explosion.DestructionType.BREAK : Explosion.DestructionType.NONE);
         me.setExplosionLevel(-1);
     }
 
@@ -145,22 +144,6 @@ public abstract class ProjectileMixin extends Entity {
         else
             predicate.setPredicate(i -> !(i == getOwner()) && !(i instanceof HostileEntity));
         return world.getClosestEntity(LivingEntity.class, predicate, null, this.getX(), this.getY(), this.getZ(), this.getBoundingBox().expand(rad));
-    }
-
-    private void setVelocityForTarget(@NotNull Entity target) {
-        double dx = target.getX() - getX(), dy = target.getY() - getY(), dz = target.getZ() - getZ();
-        double mag = dx * dx + dy * dy + dz * dz;
-        double targetMag = 0.2;
-        if (mag < targetMag) {
-            dx *= targetMag / mag;
-            dy *= targetMag / mag;
-            dz *= targetMag / mag;
-        }
-        setVelocity(dx, dy, dz);
-        yaw = 0;
-        pitch = -90;
-        velocityDirty = true;
-        velocityModified = true;
     }
 
     public void applyHoming(Entity target, int level) {
