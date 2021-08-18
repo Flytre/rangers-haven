@@ -15,10 +15,7 @@ public class EnchantmentMixin {
     @SuppressWarnings("ConstantConditions")
     @Inject(method = "isAcceptableItem", at = @At("HEAD"), cancellable = true)
     public void rangers_haven$isAcceptable(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-        if ((Object) this instanceof PiercingEnchantment) {
-            if (stack.getItem() instanceof BowItem) {
+        if ((Object) this instanceof PiercingEnchantment && stack.getItem() instanceof BowItem)
                 cir.setReturnValue(true);
-            }
-        }
     }
 }

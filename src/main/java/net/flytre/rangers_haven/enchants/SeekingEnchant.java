@@ -7,7 +7,7 @@ import net.minecraft.entity.EquipmentSlot;
 public class SeekingEnchant extends Enchantment {
 
     public SeekingEnchant() {
-        super(Enchantment.Rarity.VERY_RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.VERY_RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
         this.translationKey = "enchantments.rangers_haven.seeking";
     }
 

@@ -130,12 +130,12 @@ public abstract class ProjectileMixin extends Entity {
             return;
 
         Config config = RangersHaven.CONFIG.getConfig();
-        this.world.createExplosion(getOwner(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1.5f + me.getExplosionLevel() * 0.5f, config.explosiveEnchantDamagesBlocks() ? Explosion.DestructionType.BREAK : Explosion.DestructionType.NONE);
+        this.world.createExplosion(getOwner(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1.5f + me.getExplosionLevel() * 0.5f, config.explosionGriefing ? Explosion.DestructionType.BREAK : Explosion.DestructionType.NONE);
         me.setExplosionLevel(-1);
     }
 
     private Entity getTarget(double rad) {
-        TargetPredicate predicate = new TargetPredicate();
+        TargetPredicate predicate = TargetPredicate.createAttackable();
         Entity owner = getOwner();
         if (owner == null)
             return null;

@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BowItemMixin", "CrossbowItemMixin", "EnchantmentMixin", "ItemStackMixin", "MultishotEnchantmentMixin",
-    "PersistentProjectileEntityMixin", "ProjectileMixin"
+    "PersistentProjectileEntityMixin", "PiercingEnchantmentMixin", "ProjectileMixin"
   ],
   "client": ["NimblePredicateMixin"],
   "injectors": {

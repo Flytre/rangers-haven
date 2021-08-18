@@ -8,7 +8,7 @@ import net.minecraft.entity.EquipmentSlot;
 public class RopedEnchant extends Enchantment {
 
     public RopedEnchant() {
-        super(Enchantment.Rarity.RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+        super(Rarity.RARE, EnchantmentTarget.BOW, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
         this.translationKey = "enchantments.rangers_haven.roped";
     }
 

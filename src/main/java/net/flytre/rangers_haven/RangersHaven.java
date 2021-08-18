@@ -1,8 +1,8 @@
 package net.flytre.rangers_haven;
 
 import net.fabricmc.api.ModInitializer;
-import net.flytre.flytre_lib.config.ConfigHandler;
-import net.flytre.flytre_lib.config.ConfigRegistry;
+import net.flytre.flytre_lib.api.config.ConfigHandler;
+import net.flytre.flytre_lib.api.config.ConfigRegistry;
 import net.flytre.rangers_haven.enchants.*;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.Identifier;

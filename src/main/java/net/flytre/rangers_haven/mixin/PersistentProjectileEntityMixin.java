@@ -3,7 +3,7 @@ package net.flytre.rangers_haven.mixin;
 import net.flytre.rangers_haven.RangerProjectile;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -81,8 +81,8 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
         this.explosionLevel = level;
     }
 
-    @Inject(method = "writeCustomDataToTag", at = @At("HEAD"))
-    public void rangers_haven$toTag(CompoundTag tag, CallbackInfo ci) {
+    @Inject(method = "writeCustomDataToNbt", at = @At("HEAD"))
+    public void rangers_haven$toTag(NbtCompound tag, CallbackInfo ci) {
         tag.putInt("explosionLevel", explosionLevel);
         tag.putInt("roped", roped);
         tag.putInt("seeking", seeking);
@@ -94,8 +94,8 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
 
     }
 
-    @Inject(method = "readCustomDataFromTag", at = @At("HEAD"))
-    public void rangers_haven$fromTag(CompoundTag tag, CallbackInfo ci) {
+    @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
+    public void rangers_haven$fromTag(NbtCompound tag, CallbackInfo ci) {
         this.explosionLevel = tag.getInt("explosionLevel");
         this.roped = tag.getInt("roped");
         this.seeking = tag.getInt("seeking");

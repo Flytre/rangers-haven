@@ -1,8 +1,8 @@
 package net.flytre.rangers_haven.mixin;
 
 import net.flytre.rangers_haven.RangersHaven;
-import net.minecraft.client.item.ModelPredicateProvider;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
+import net.minecraft.client.item.UnclampedModelPredicateProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
@@ -14,18 +14,18 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(ModelPredicateProviderRegistry.class)
 public class NimblePredicateMixin {
 
-    @ModifyVariable(method = "register(Lnet/minecraft/item/Item;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/item/ModelPredicateProvider;)V", at = @At("HEAD"))
-    private static ModelPredicateProvider modify(ModelPredicateProvider dummy, Item item, Identifier id, ModelPredicateProvider provider) {
+    @ModifyVariable(method = "register(Lnet/minecraft/item/Item;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/item/UnclampedModelPredicateProvider;)V", at = @At("HEAD"))
+    private static UnclampedModelPredicateProvider modify(UnclampedModelPredicateProvider dummy, Item item, Identifier id, UnclampedModelPredicateProvider provider) {
         if (!id.equals(new Identifier("pull")))
             return provider;
 
-        return (itemStack, clientWorld, livingEntity) -> {
-            if (livingEntity == null) {
+        return (stack, world, entity, seed) -> {
+            if (entity == null) {
                 return 0.0F;
             } else {
-                int l = EnchantmentHelper.getLevel(RangersHaven.NIMBLE, itemStack);
+                int l = EnchantmentHelper.getLevel(RangersHaven.NIMBLE, stack);
                 float mult = MathHelper.clamp(1.0f - 0.05f * l, 0.05f, 1);
-                return livingEntity.getActiveItem() != itemStack ? 0.0F : (float) (itemStack.getMaxUseTime() - livingEntity.getItemUseTimeLeft()) / (20.0F * mult);
+                return entity.getActiveItem() != stack ? 0.0F : (float) (stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / (20.0F * mult);
             }
         };
     }

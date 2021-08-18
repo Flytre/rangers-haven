@@ -17,7 +17,7 @@ public abstract class MultishotEnchantmentMixin extends Enchantment {
     }
 
     @Inject(method="getMaxLevel",at=@At("HEAD"), cancellable = true)
-    public void multishotTen(CallbackInfoReturnable<Integer> cir) {
+    public void rangers_haven$multishotCap(CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(5);
     }
 

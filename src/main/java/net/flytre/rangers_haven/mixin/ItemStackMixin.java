@@ -71,6 +71,7 @@ public abstract class ItemStackMixin {
 
     }
 
+    @Environment(EnvType.CLIENT)
     private void addToolTip(List<Text> list, Enchantment enchantment, Function<Integer, String> levelToString) {
         ItemStack stack = (ItemStack) (Object) this;
         int level = EnchantmentHelper.getLevel(enchantment, stack);

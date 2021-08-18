@@ -21,6 +21,4 @@ public interface RangerProjectile {
     int getSharpshooter();
 
     void setSharpshooter(int sharpshooter);
-
-
 }

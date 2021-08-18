@@ -5,8 +5,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Mixin(CrossbowItem.class)
 public abstract class CrossbowItemMixin {
@@ -50,14 +51,11 @@ public abstract class CrossbowItemMixin {
 
     private static int getMultishotLevel(ItemStack stack) {
         if (!stack.isEmpty()) {
-            Identifier identifier = Registry.ENCHANTMENT.getId(Enchantments.MULTISHOT);
-            ListTag listTag = stack.getEnchantments();
-            for (int i = 0; i < listTag.size(); ++i) {
-                CompoundTag compoundTag = listTag.getCompound(i);
-                Identifier identifier2 = Identifier.tryParse(compoundTag.getString("id"));
-                if (identifier2 != null && identifier2.equals(identifier)) {
-                    return Math.max(0, compoundTag.getInt("lvl"));
-                }
+            NbtList listTag = stack.getEnchantments();
+            for (NbtCompound compound : listTag.stream().map(i -> (NbtCompound)i).collect(Collectors.toList())) {
+                Identifier identifier2 = Identifier.tryParse(compound.getString("id"));
+                if (identifier2 != null && identifier2.equals(Registry.ENCHANTMENT.getId(Enchantments.MULTISHOT)))
+                    return Math.max(0, compound.getInt("lvl"));
             }
 
         }
@@ -72,7 +70,7 @@ public abstract class CrossbowItemMixin {
 
         for (int i = 0; i < list.size(); ++i) {
             ItemStack itemStack = list.get(i);
-            boolean bl = entity instanceof PlayerEntity && ((PlayerEntity) entity).abilities.creativeMode;
+            boolean bl = entity instanceof PlayerEntity && ((PlayerEntity) entity).getAbilities().creativeMode;
             if (!itemStack.isEmpty()) {
                 float breadth = Math.min(15 + 2 * list.size(), 180);
                 float simulated = list.size() > 1 ? (float) (-breadth + ((breadth * 2) * (i / (list.size() - 1.0)))) : 0.0f;
@@ -81,5 +79,6 @@ public abstract class CrossbowItemMixin {
             }
         }
         postShoot(world, entity, stack);
+        ci.cancel();
     }
 }
