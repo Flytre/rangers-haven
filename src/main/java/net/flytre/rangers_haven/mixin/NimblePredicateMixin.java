@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(ModelPredicateProviderRegistry.class)
 public class NimblePredicateMixin {
 
-    @ModifyVariable(method = "register(Lnet/minecraft/item/Item;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/item/UnclampedModelPredicateProvider;)V", at = @At("HEAD"))
+    @ModifyVariable(method = "register(Lnet/minecraft/item/Item;Lnet/minecraft/util/Identifier;Lnet/minecraft/client/item/UnclampedModelPredicateProvider;)V", at = @At("HEAD"), argsOnly = true)
     private static UnclampedModelPredicateProvider modify(UnclampedModelPredicateProvider dummy, Item item, Identifier id, UnclampedModelPredicateProvider provider) {
         if (!id.equals(new Identifier("pull")))
             return provider;

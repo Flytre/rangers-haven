@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class BowItemMixin {
 
 
-    @Inject(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;setProperties(Lnet/minecraft/entity/Entity;FFFFF)V"), locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(method = "onStoppedUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/PersistentProjectileEntity;setVelocity(Lnet/minecraft/entity/Entity;FFFFF)V"), locals = LocalCapture.CAPTURE_FAILHARD)
     public void rangers_haven$applyExplosiveLevel(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci, PlayerEntity playerEntity, boolean bl, ItemStack itemStack, int i, float f, boolean bl2, ArrowItem arrowItem, PersistentProjectileEntity persistentProjectileEntity) {
 
         int l = EnchantmentHelper.getLevel(RangersHaven.EXPLOSIVE, stack);
@@ -45,6 +45,8 @@ public class BowItemMixin {
         if (l > 0)
             ((RangerProjectile) persistentProjectileEntity).setSharpshooter(l);
     }
+
+
 
     @ModifyVariable(method = "onStoppedUsing", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/BowItem;getPullProgress(I)F"))
     public float rangers_haven$modifyPullProgress(float f, ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
