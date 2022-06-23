@@ -25,7 +25,7 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void rangers_haven$setStartPos(CallbackInfo ci) {
-        if (startPos.x == 0 && startPos.y == 0 && startPos.z == 0) {
+        if (startPos == null || startPos.x == 0 && startPos.y == 0 && startPos.z == 0) {
             ProjectileEntity instance = (ProjectileEntity) (Object) this;
             startPos = instance.getPos();
         }
@@ -88,10 +88,9 @@ public abstract class PersistentProjectileEntityMixin implements RangerProjectil
         tag.putInt("seeking", seeking);
         tag.putInt("flechettes", flechettes);
         tag.putInt("sharpshooter", sharpshooter);
-        tag.putDouble("startX", startPos.x);
-        tag.putDouble("startY", startPos.y);
-        tag.putDouble("startZ", startPos.z);
-
+        tag.putDouble("startX", startPos == null ? 0 : startPos.x);
+        tag.putDouble("startY", startPos == null ? 0 : startPos.y);
+        tag.putDouble("startZ", startPos == null ? 0 : startPos.z);
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("HEAD"))
