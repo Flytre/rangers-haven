@@ -14,6 +14,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -44,16 +45,17 @@ public abstract class CrossbowItemMixin {
     }
 
 
-    @ModifyVariable(method = "loadProjectiles", at = @At(value = "STORE"), ordinal = 1)
-    private static int setProjectiles(int j, LivingEntity shooter, ItemStack projectile) {
+    @ModifyVariable(method = "loadProjectiles", at = @At(value = "STORE", ordinal = 1), ordinal = 0)
+    private static int rangers_haven$setProjectiles(int j, LivingEntity shooter, ItemStack projectile) {
         int i = getMultishotLevel(projectile);
         return j + (i == 0 ? 0 : i - 1);
     }
 
+    @Unique
     private static int getMultishotLevel(ItemStack stack) {
         if (!stack.isEmpty()) {
             NbtList listTag = stack.getEnchantments();
-            for (NbtCompound compound : listTag.stream().map(i -> (NbtCompound) i).collect(Collectors.toList())) {
+            for (NbtCompound compound : listTag.stream().map(i -> (NbtCompound) i).toList()) {
                 Identifier identifier2 = Identifier.tryParse(compound.getString("id"));
                 if (identifier2 != null && identifier2.equals(Registry.ENCHANTMENT.getId(Enchantments.MULTISHOT)))
                     return Math.max(0, compound.getInt("lvl"));

@@ -207,6 +207,6 @@ task remapObfuscatedJar(type: RemapJarTask) {
 
 prepareRemapObfuscatedJar.dependsOn postObfuscation
 
-//task postRemap(type: Exec, dependsOn: remapObfuscatedJar) {
-//    commandLine "java", "-cp", "../proguard/mod-obfuscator-1.0.0-all.jar", "net.flytre.mod_obfuscator.PostRemappingTasks", "build", "${archivesBaseName}"
-//}
+task postRemap(type: Exec, dependsOn: remapObfuscatedJar) {
+    commandLine "java", "-cp", "../proguard/mod-obfuscator-1.0.0-all.jar", "net.flytre.mod_obfuscator.PostRemappingTasks", "build", "${archivesBaseName}"
+}
